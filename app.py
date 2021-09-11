@@ -44,6 +44,7 @@ def welcome():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/stations<br/>"
+        f"/api/v1.0/<start> and /api/v1.0/<start>/<end>"
     )
 
 
@@ -75,44 +76,40 @@ prcp_scores = (
 def tobs():
     # Create session 
     session = Session(engine)
+most_active = (
+    session.query(measurement.station, station.name,func.count(measurement.station)).\
+    filter(measurement.station == station.station).group_by(measurement.station)
+    .order_by(func.count(measurement.id).desc()).all()
+)
+station_id = most_active[0][0]
+station_id_most = most_active[0][2]
 
-    """Return a list of all passenger names"""
-    # Query all passengers
-    results = session.query(Passenger.name).all()
+#calculate lowest, highest, avg temp
+most_active = ( 
+    session.query(
+    func.min(measurement.tobs),
+    func.max(measurement.tobs),
+    func.avg(measurement.tobs),
+)   
+.filter(measurement.station == most_active[0][0]).all()
+)
 
-    session.close()
-
-    # Convert list of tuples into normal list
-    all_names = list(np.ravel(results))
-
-    return jsonify(all_names)
+    return jsonify(most_active)
+session.close()
 
 @app.route("/api/v1.0/stations")
 def stations():
-    # Create our session (link) from Python to the DB
-    session = Session(engine)
+temp_obs = session.query(measurement.tobs).\
+    filter(measurement.station == station_id).filter(measurement.date >= query_date).all()
 
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
-    # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
+temp_obs_df = pd.DataFrame(temp_obs, columns=['tobs'])
+temp_obs_df.head()
 
+    return jsonify(temp_obs)
     session.close()
 
-   
-    # Create a dictionary from the row data and append to a list of all_passengers
-    all_passengers = []
-    for name, age, sex in results:
-        passenger_dict = {}
-        passenger_dict["name"] = name
-        passenger_dict["age"] = age
-        passenger_dict["sex"] = sex
-        all_passengers.append(passenger_dict)
-
-    return jsonify(all_passengers)
-
-
     
-    #####@app.route("/api/v1.0/precipitation")
+    #####@app.route("/api/v1.0/<start> and /api/v1.0/<start>/<end>")
 def calc_temps(start_date, end_date):
     """TMIN, TAVG, and TMAX for a list of dates.
     
@@ -124,9 +121,8 @@ def calc_temps(start_date, end_date):
         TMIN, TAVE, and TMAX
     """
     
-    return session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
-        filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
-
+    return 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
