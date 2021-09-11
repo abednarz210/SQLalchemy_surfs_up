@@ -22,10 +22,11 @@ Plot the results using the DataFrame plot method.
 
 
 
+http://github.com - automatic!
+[GitHub](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
 
 
 
-https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png
 
 
 
