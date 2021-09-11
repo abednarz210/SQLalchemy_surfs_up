@@ -2,7 +2,7 @@ import numpy as np
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, create_session
 from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
@@ -11,7 +11,7 @@ from flask import Flask, jsonify
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///hawaii.sqlite")
+engine = create_engine("sqlite:///Resources///hawaii.sqlite")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -19,7 +19,12 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-Passenger = Base.classes.
+Measurement = Base.classes.measurement
+Station = Base.classes.station
+
+#create_session
+session = Session(engine)
+
 
 #################################################
 # Flask Setup
@@ -39,30 +44,36 @@ def welcome():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/stations<br/>"
-       ### fix f"/api/v1.0/passengers"
     )
 
 
 @app.route("/api/v1.0/precipitation")
 def precipitation():
-    # Create our session (link) from Python to the DB
- ####jupyter code 
+    #last year precipitation
     session = Session(engine)
 
-    """Return a list of all passenger names"""
-    # Query all passengers
-    results = session.query(Passenger.name).all()
+# Find the most recent date in the data set.
+recent_date = session.query(measurement.date).order_by(measurement.date.desc()).first()
 
+# Design a query to retrieve the last 12 months of precipitation data and plot the results. 
+# Starting from the most recent data point in the database. 
+# Calculate the date one year from the last date in data set.
+
+query_date = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+recent_date = dt.date(2017, 8, 23)
+
+# Perform a query to retrieve the data and precipitation scores
+
+prcp_scores = (
+    session.query(measurement.date, measurement.prcp).filter(measurement.date >= query_date)
+    .order_by(measurement.date)
+    return jsonify(prcp_scores)
+    
     session.close()
-
-    # Convert list of tuples into normal list
-    all_names = list(np.ravel(results))
-
-    return jsonify(all_names)
 
 @app.route("/api/v1.0/tobs")
 def tobs():
-    # Create our session (link) from Python to the DB
+    # Create session 
     session = Session(engine)
 
     """Return a list of all passenger names"""
