@@ -20,10 +20,9 @@ Sort the DataFrame values by date.
 
 Plot the results using the DataFrame plot method.
 
+[![temp_hist]((https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
 
 
-http://github.com - automatic!
-[GitHub](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
 
 
 
