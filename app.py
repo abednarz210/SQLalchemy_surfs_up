@@ -19,8 +19,8 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-Measurement = Base.classes.measurement
-Station = Base.classes.station
+measurement = Base.classes.measurement
+station = Base.classes.station
 
 #create_session
 session = Session(engine)
@@ -100,7 +100,7 @@ session.close()
 @app.route("/api/v1.0/stations")
 def stations():
 temp_obs = session.query(measurement.tobs).\
-    filter(measurement.station == station_id).filter(measurement.date >= query_date).all()
+    filter(measurement.station == station_id).filter(measurement.date <= query_date).all()
 
 temp_obs_df = pd.DataFrame(temp_obs, columns=['tobs'])
 temp_obs_df.head()
