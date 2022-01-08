@@ -12,9 +12,9 @@
 * Using this date, retrieve the last 12 months of precipitation data by querying the 12 preceding months of data. Note you do not pass in the date as a variable 
   to your query.
 * Select only the date and prcp values.
-*Load the query results into a Pandas DataFrame and set the index to the date column.
-*Sort the DataFrame values by date.
-*Plot the results using the DataFrame plot method.
+* Load the query results into a Pandas DataFrame and set the index to the date column.
+* Sort the DataFrame values by date.
+* Plot the results using the DataFrame plot method.
 
 ![prcp](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/PrcpDF.png)
 
@@ -32,8 +32,7 @@
 * Query the last 12 months of temperature observation data for this station.
 * Plot the results as a histogram with bins=12.
 
-
-[![temp_hist](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
+![temp_hist](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
 
 
 
