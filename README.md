@@ -1,4 +1,4 @@
-# SQLAlchemy-challenge
+# SQLAlchemy
 
 ## Surf's Up! 
 
@@ -8,8 +8,8 @@
 
 #### Precipitation Analysis
 
-* Start by finding the most recent date in the data set.
-* Using this date, retrieve the last 12 months of precipitation data by querying the 12 preceding months of data. 
+* Find the most recent date in the data set.
+* Retrieve the last 12 months of precipitation data by querying the 12 preceding months of data. 
 * Select only the date and prcp values.
 * Load the query results into a Pandas DataFrame and set the index to the date column.
 * Sort the DataFrame values by date.
@@ -32,13 +32,4 @@
 * Plot the results as a histogram with bins=12.
 
 ![temp_hist](https://github.com/abednarz210/sqlalchemy-challenge/blob/main/tempOBS.png)
-
-
-
-
-
-
-
-
-
 
